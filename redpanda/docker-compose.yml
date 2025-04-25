@@ -1,7 +1,6 @@
-version: '2'
 services:
   redpanda:
-    image: vectorized/redpanda:latest
+    image: redpandadata/redpanda:latest
     command:
       - redpanda start
       - --smp 1
@@ -20,8 +19,7 @@ services:
       - 29092:29092
 
   console:
-    image: docker.redpanda.com/redpandadata/console:latest
-    restart: on-failure
+    image: redpandadata/console:latest
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:
@@ -40,6 +38,6 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     ports:
-      - "8080:8080"
+      - "18080:8080"
     depends_on:
       - redpanda
